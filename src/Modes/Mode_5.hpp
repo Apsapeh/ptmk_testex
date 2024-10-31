@@ -4,8 +4,7 @@
 
 #include <iostream>
 
-class Mode_5 : public ModeInterface
-{
+class Mode_5 : public ModeInterface {
 public:
     virtual void execute(std::vector<std::string> args) override {
         std::cout << "Mode_2" << std::endl;

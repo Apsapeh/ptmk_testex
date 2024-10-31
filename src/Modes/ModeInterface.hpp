@@ -3,6 +3,7 @@
 #include <vector>
 #include <string>
 
+// Абстрактный класс режима работы программы
 class ModeInterface {
 public:
     virtual ~ModeInterface() = default;

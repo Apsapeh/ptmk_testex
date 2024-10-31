@@ -6,6 +6,7 @@
 
 #include <pqxx/pqxx>
 
+#include "Employee.hpp"
 #include "Modes/ModeInterface.hpp"
 #include "Modes/Mode_1.hpp"
 #include "Modes/Mode_2.hpp"
@@ -20,21 +21,27 @@ int main(int argc, char* argv[]) {
         return 1;
     }
 
+    // Преобразование аргументов командной строки в вектор строк
     std::vector<std::string> args(argv + 1, argv + argc);
-    
+
+    // Создание объектов режимов
     std::unordered_map<std::string, std::unique_ptr<ModeInterface>> modes(5);
     modes["1"] = std::make_unique<Mode_1>();
     modes["2"] = std::make_unique<Mode_2>();
     modes["3"] = std::make_unique<Mode_3>();
     modes["4"] = std::make_unique<Mode_4>();
     modes["5"] = std::make_unique<Mode_5>();
-    
+
+    // Запуск программы в соответствии с выбранным режимом
     if (modes.contains(args[0])) {
         modes[args[0]]->execute(args);
     } else {
         std::cerr << "Unknown mode: " << args[0] << '\n';
         return 1;
     }
+
+    Employee employee("Timofey Kirichenko Tarasovich", "2006-01-15", "Male");
+    std::cout << (int) employee.getAge() << '\n';
 
     /*for (auto const& arg: args) {
         std::cout << "Argument: " << arg << '\n';

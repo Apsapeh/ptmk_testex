@@ -1,4 +1,5 @@
 #include "Employee.hpp"
+#include "DBManager.hpp"
 #include <iostream>
 #include <ctime>
 
@@ -19,9 +20,9 @@ uint8_t Employee::getAge() const {
     int day = now.tm_mday;
 
     // Извлекаем год, месяц и день даты рождения YYYY-MM-DD
-    int birthYear = std::stoi(birthDate.substr(0, 4));
-    int birthMonth = std::stoi(birthDate.substr(5, 2));
-    int birthDay = std::stoi(birthDate.substr(8, 2));
+    int birthYear = std::stoi(this->birthDate.substr(0, 4));
+    int birthMonth = std::stoi(this->birthDate.substr(5, 2));
+    int birthDay = std::stoi(this->birthDate.substr(8, 2));
 
     int age = year - birthYear;
     // Если текущий день и месяц меньше дня и месяца рождения, то уменьшаем возраст
@@ -29,4 +30,20 @@ uint8_t Employee::getAge() const {
         age--;
 
     return age;
+}
+
+void Employee::addToDB(std::string db_url) const {
+    DBManager::addEmployee(std::move(db_url), *this);
+}
+
+std::string Employee::getFullName() const {
+    return this->fullName;
+}
+
+std::string Employee::getBirthDate() const {
+    return this->birthDate;
+}
+
+std::string Employee::getSex() const {
+    return this->sex;
 }

@@ -6,7 +6,7 @@
 
 class Mode_5 : public ModeInterface {
 public:
-    virtual void execute(std::vector<std::string> args) override {
+    virtual void execute(std::vector<std::string> args, std::string db_url) override {
         std::cout << "Mode_2" << std::endl;
     }
 };

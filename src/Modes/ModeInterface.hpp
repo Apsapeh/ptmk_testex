@@ -7,5 +7,5 @@
 class ModeInterface {
 public:
     virtual ~ModeInterface() = default;
-    virtual void execute(std::vector<std::string> args) = 0;
+    virtual void execute(std::vector<std::string> args, std::string db_url) = 0;
 };

@@ -1,11 +1,10 @@
 #pragma once
 
 #include "ModeInterface.hpp"
+#include "../Employee.hpp"
 
 #include <string>
 #include <iostream>
-
-#include "../Employee.hpp"
 
 class Mode_2 : public ModeInterface {
 public:

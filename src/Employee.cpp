@@ -1,6 +1,5 @@
 #include "Employee.hpp"
 #include "DBManager.hpp"
-#include <iostream>
 #include <ctime>
 
 Employee::Employee(std::string fullName, std::string birthDate, std::string sex) {

@@ -4,10 +4,6 @@
 #include <unordered_map>
 #include <memory>
 
-#include <pqxx/pqxx>
-
-#include "DBManager.hpp"
-#include "Employee.hpp"
 #include "Modes/ModeInterface.hpp"
 #include "Modes/Mode_1.hpp"
 #include "Modes/Mode_2.hpp"

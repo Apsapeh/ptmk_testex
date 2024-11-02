@@ -42,8 +42,12 @@ void DBManager::createTable(std::string url) {
     DB_CONNECTION_HEADER(tx)
 
     tx.exec0("DROP TABLE IF EXISTS employees");
+    tx.exec0("DROP TYPE IF EXISTS sex_enum;");
+
+    tx.exec0("CREATE TYPE sex_enum AS ENUM ('Male', 'Female');");
     tx.exec0("CREATE TABLE employees "
-             "(id SERIAL PRIMARY KEY, fullname TEXT, birthdate DATE, sex VARCHAR(6));");
+             "(id SERIAL PRIMARY KEY, fullname TEXT, birthdate DATE, sex sex_enum);");
+    tx.exec0("CREATE INDEX ON employees (sex, fullname);");
 
     DB_CONNECTION_FOOTER(tx)
 }

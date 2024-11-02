@@ -10,10 +10,7 @@ public:
     virtual void execute(std::vector<std::string> args, std::string db_url) override {
         std::vector<Employee> employees = DBManager::getUniqueSortedEmployees(std::move(db_url));
 
-        for (const auto& employee: employees) {
-            std::cout << employee.getFullName() << "   Birthdate: " << employee.getBirthDate() << " ("
-                      << (int) employee.getAge() << " y.o.)" << "  Sex: " << employee.getSex()
-                      << "\n";
-        }
+        for (const auto& employee: employees)
+            std::cout << employee.toString() << "\n";
     }
 };

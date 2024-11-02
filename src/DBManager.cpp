@@ -27,26 +27,12 @@ DBManager::~DBManager() {
 }
 
 void DBManager::addEmployees(std::vector<Employee>* employees) {
-    std::string sql = "INSERT INTO employees (fullname, birthdate, sex) VALUES ";
-    sql.reserve(employees->size() * 40);
+    pqxx::stream_to stream =
+            pqxx::stream_to::table(tx, {"employees"}, {"fullname", "birthdate", "sex"});
 
-    // Генерация SQL запроса с значениями
-    uint32_t i = 0;
-    for (const auto& employee: *employees) {
-        sql.append("('")
-                .append(employee.getFullName())
-                .append("', '")
-                .append(employee.getBirthDate())
-                .append("','")
-                .append(employee.getSex())
-                .append("')");
-        if (i < employees->size() - 1)
-            sql.append(",");
-        i++;
-    }
-    sql += ";";
-
-    tx.exec_params0(sql);
+    for (auto const& employee: *employees)
+        stream.write_values(employee.getFullName(), employee.getBirthDate(), employee.getSex());
+    stream.complete();
 }
 
 
@@ -79,6 +65,23 @@ std::vector<Employee> DBManager::getUniqueSortedEmployees(std::string url) {
     DB_CONNECTION_HEADER(tx)
 
     const char* sql = "SELECT DISTINCT ON (fullname, birthdate) * FROM employees ORDER BY fullname";
+
+    std::vector<Employee> employees;
+    for (const auto& row: tx.exec(sql)) {
+        Employee employee(row[1].c_str(), row[2].c_str(), row[3].c_str());
+        employees.push_back(employee);
+    }
+
+    return employees;
+
+    DB_CONNECTION_FOOTER(tx)
+}
+
+// Получение сотрудников мужчин с фамилией, начинающимися на F
+std::vector<Employee> DBManager::getMaleEmployesWithSurnameStartingWithF(std::string url) {
+    DB_CONNECTION_HEADER(tx)
+
+    const char* sql = "SELECT * FROM employees WHERE sex = 'Male' AND fullname LIKE 'F%';";
 
     std::vector<Employee> employees;
     for (const auto& row: tx.exec(sql)) {

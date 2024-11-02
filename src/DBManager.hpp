@@ -16,4 +16,5 @@ public:
     static void createTable(std::string url);
     static void addEmployee(std::string url, Employee employee);
     static std::vector<Employee> getUniqueSortedEmployees(std::string url);
+    static std::vector<Employee> getMaleEmployesWithSurnameStartingWithF(std::string url);
 };

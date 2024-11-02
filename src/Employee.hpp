@@ -18,4 +18,6 @@ public:
     std::string getFullName() const;
     std::string getBirthDate() const;
     std::string getSex() const;
+
+    std::string toString() const;
 };

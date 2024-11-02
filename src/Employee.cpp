@@ -46,3 +46,16 @@ std::string Employee::getBirthDate() const {
 std::string Employee::getSex() const {
     return this->sex;
 }
+
+std::string Employee::toString() const {
+
+    return std::string()
+            .append(this->fullName)
+            .append("   Birthdate: ")
+            .append(this->birthDate)
+            .append(" (")
+            .append(std::to_string(this->getAge()))
+            .append(" y.o.)")
+            .append("  Sex: ")
+            .append(this->sex);
+}
